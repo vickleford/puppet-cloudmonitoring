@@ -4,6 +4,6 @@ Assumes you already have a monitoring token to supply it
 
 Examples:
 
-    class { 'puppet-cloudmonitoring':
+    class { 'cloudmonitoring':
       monitoring_token => 'ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff.000000'  
     }
