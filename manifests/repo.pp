@@ -21,9 +21,13 @@ class cloudmonitoring::repo {
   }
 
   if $::osfamily == 'Debian' {
+    $release_name = $operatingsystem ? {
+      "Debian" => $::lsbdistcodename,
+      "Ubuntu" => $::operatingsystemrelease,
+    }
     include apt
     apt::source { "rackspace_monitoring":
-      location    => "${package_url}/${::os_lower}-${::operatingsystemrelease}-${::hardwaremodel}",
+      location    => "${package_url}/${::os_lower}-${release_name}-${::hardwaremodel}",
       release     => "cloudmonitoring",
       include_src => false,
       key         => "D05AB914",
