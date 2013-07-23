@@ -30,5 +30,24 @@ class cloudmonitoring::token {
     require => Exec["raxmon-agent-tokens-list ${::fqdn}"],
     notify  => Class['cloudmonitoring::service'],
   }
+
+  # get the agent id for this provider
+  $agent_id_filename = "/tmp/${::fqdn}.agent_id"
+  exec { "create ${agent_id_filename}":
+    command     => "raxmon-entities-list | grep ${::fqdn} | sed -n 's/.*id=\\([a-zA-Z0-9]*\\) .*/\\1/p' > ${agent_id_filename}",
+    path        => ["/usr/local/bin", "/usr/bin/", "/bin"],
+    environment => "RAXMON_RAXRC=${cloudmonitoring::raxmon::raxrc}",
+    creates     => $agent_id_filename,
+    require     => Exec["raxmon-agent-tokens-list ${::fqdn}"],
+  }
+  
+  # now just need to update the entity on rackspace to properly
+  # include this agent's hostname
+  exec { "raxmon-entities-update --id=$(cat ${agent_id_filename}) --agent-id=${::fqdn}":
+    path        => ["/usr/local/bin", "/usr/bin/", "/bin"],
+    environment => "RAXMON_RAXRC=${cloudmonitoring::raxmon::raxrc}",
+    require     => Exec["create ${agent_id_filename}"],
+    logoutput   => on_failure,
+  }
   
 }
