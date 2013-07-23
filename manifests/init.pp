@@ -30,7 +30,6 @@ class cloudmonitoring(
   elsif $username != undef and $apikey != undef {
     include cloudmonitoring::install
     include cloudmonitoring::token
-    include cloudmonitoring::config
     include cloudmonitoring::service
   }
   else {
