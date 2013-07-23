@@ -1,0 +1,14 @@
+# -*- mode: conf -*-
+
+[credentials]
+username=<%= scope.lookupvar('cloudmonitoring::username') %>
+api_key=<%= scope.lookupvar('cloudmonitoring::apikey') %>
+
+[api]
+url=https://monitoring.api.rackspacecloud.com/v1.0
+
+[auth_api]
+url=https://identity.api.rackspacecloud.com/v2.0
+
+[ssl]
+verify=true
