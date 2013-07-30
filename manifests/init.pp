@@ -16,6 +16,23 @@
 #
 
 
-class cloudmonitoring($monitoring_token) {
-  include cloudmonitoring::install, cloudmonitoring::config, cloudmonitoring::service
+class cloudmonitoring(
+  $monitoring_token = undef,
+  $username         = undef,
+  $apikey           = undef,
+) {
+
+  if $monitoring_token != undef {
+    include cloudmonitoring::install
+    include cloudmonitoring::config
+    include cloudmonitoring::service
+  }
+  elsif $username != undef and $apikey != undef {
+    include cloudmonitoring::install
+    include cloudmonitoring::token
+    include cloudmonitoring::service
+  }
+  else {
+    fail("must specify either a monitoring_token or both a username and apikey")
+  }
 }
