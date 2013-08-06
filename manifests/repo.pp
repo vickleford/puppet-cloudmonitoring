@@ -2,7 +2,6 @@ class cloudmonitoring::repo {
 
   $package_url = "http://stable.packages.cloudmonitoring.rackspace.com"
   $signing_url = "https://monitoring.api.rackspacecloud.com/pki/agent"
-  $signingkey = 'linux.asc'
   
   if $::osfamily == 'RedHat' {
     if $::os_maj_version < 6 { 
@@ -21,6 +20,7 @@ class cloudmonitoring::repo {
   }
 
   if $::osfamily == 'Debian' {
+    $signingkey = 'linux.asc'
     $release_name = $operatingsystem ? {
       "Debian" => $::lsbdistcodename,
       "Ubuntu" => $::operatingsystemrelease,
