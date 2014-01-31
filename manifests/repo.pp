@@ -2,15 +2,16 @@ class cloudmonitoring::repo {
 
   $package_url = "http://stable.packages.cloudmonitoring.rackspace.com"
   $signing_url = "https://monitoring.api.rackspacecloud.com/pki/agent"
-  
+
   if $::osfamily == 'RedHat' {
-    if $::os_maj_version < 6 { 
+    $signingkey = 'linux.asc'
+    if $::os_maj_version < 6 {
       $signingkey = $operatingsystem ? {
         'RedHat' => 'redhat-5.asc',
         'CentOS' => 'centos-5.asc',
       }
     }
-        
+
     yumrepo { 'rackspace_monitoring':
       descr   => 'Rackspace Monitoring',
       baseurl => "${package_url}/${::os_lower}-${::os_maj_version}-${::architecture}",
