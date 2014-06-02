@@ -1,9 +1,9 @@
 # == Class: cloudmonitoring
 #
 # Install, configure, and launch the Rackspace Cloud Monitoring Agent
-# Assumes you already have configured and know an agent token 
+# Assumes you already have configured and know an agent token
 # See http://www.rackspace.com/knowledge_center/article/install-the-cloud-monitoring-agent#Setup
-# 
+#
 # === Parameters
 #
 # [*monitoring_token*]
@@ -11,7 +11,7 @@
 #   see http://docs.rackspace.com/cm/api/v1.0/cm-devguide/content/service-agent-tokens.html
 #
 # === Authors
-# 
+#
 # Victor Watkins <vic.watkins@rackspace.com>
 #
 
@@ -20,6 +20,8 @@ class cloudmonitoring(
   $monitoring_token = undef,
   $username         = undef,
   $apikey           = undef,
+  $api_url          = "https://monitoring.api.rackspacecloud.com/v1.0",
+  $auth_api_url     = "https://identity.api.rackspacecloud.com/v2.0"
 ) {
 
   if $monitoring_token != undef {
