@@ -5,10 +5,10 @@ username=<%= scope.lookupvar('cloudmonitoring::username') %>
 api_key=<%= scope.lookupvar('cloudmonitoring::apikey') %>
 
 [api]
-url=https://monitoring.api.rackspacecloud.com/v1.0
+url=<%= scope.lookupvar('cloudmonitoring::api_url') %>
 
 [auth_api]
-url=https://identity.api.rackspacecloud.com/v2.0
+url=<%= scope.lookupvar('cloudmonitoring::auth_api_url') %>
 
 [ssl]
 verify=true
